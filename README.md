@@ -98,8 +98,14 @@ pip install torch --index-url https://download.pytorch.org/whl/cu121
 # Install PyTorch Geometric
 pip install torch-geometric torch-scatter
 
-# Install GDyNet (editable mode)
+# Option 1: Install with pip (editable mode, recommended)
 pip install -e .
+
+# Option 2: Install with setup.py
+python setup.py install
+
+# Option 3: Install dependencies only (no package install)
+pip install -r requirements.txt
 ```
 
 ### Install with Optional Dependencies
