@@ -1,0 +1,104 @@
+cff-version: 1.2.0
+title: "GDyNet: Graph Dynamical Network for Molecular Dynamics Analysis"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Dhakane
+    given-names: Abhijeet
+    orcid: "0000-0001-5645-4034"
+    affiliation: "Oak Ridge National Laboratory/Bredesen Center (University of Tennessee, Knoxville)"
+  - family-names: Xie
+    given-names: Tian
+  - family-names: Yilmaz
+    given-names: Dundar
+  - family-names: van Duin
+    given-names: Adri
+  - family-names: Sumpter
+    given-names: Bobby G
+    affiliation: "Oak Ridge National Laboratory"
+  - family-names: Ganesh
+    given-names: P
+    affiliation: "Oak Ridge National Laboratory"
+repository-code: "https://github.com/abhijeetdhakane/gdy_pl"
+url: "https://abhijeetdhakane.github.io/gdy_pl"
+license: MIT
+version: "2.0.0"
+date-released: "2025-12-26"
+keywords:
+  - graph neural networks
+  - molecular dynamics
+  - VAMP
+  - variational approach
+  - deep learning
+  - PyTorch
+  - ferroelectrics
+  - dynamical systems
+  - machine learning
+  - materials science
+abstract: >-
+  GDyNet-ferro is a graph neural network framework for identifying slow
+  dynamical features and hidden states in molecular dynamics simulations.
+  This implementation uses the Variational Approach for Markov Processes
+  (VAMP) to learn meaningful collective variables from atomistic trajectories.
+  Key applications include ferroelectric materials dynamics, phase transition
+  analysis, reaction coordinate identification, and dimensionality reduction
+  for MD data.
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Dhakane
+      given-names: Abhijeet
+    - family-names: Xie
+      given-names: Tian
+    - family-names: Yilmaz
+      given-names: Dundar
+    - family-names: van Duin
+      given-names: Adri
+    - family-names: Sumpter
+      given-names: Bobby G
+    - family-names: Ganesh
+      given-names: P
+  title: "A Graph Dynamical Neural Network Approach for Decoding Dynamical States in Ferroelectrics"
+  journal: "Carbon Trends"
+  year: 2023
+  volume: 11
+  pages: "100264"
+  doi: "10.1016/j.cartre.2023.100264"
+  publisher:
+    name: "Elsevier"
+references:
+  - type: article
+    authors:
+      - family-names: Xie
+        given-names: Tian
+      - family-names: France-Lanord
+        given-names: Arthur
+      - family-names: Wang
+        given-names: Yanming
+      - family-names: Shao-Horn
+        given-names: Yang
+      - family-names: Grossman
+        given-names: Jeffrey C
+    title: "Graph dynamical networks for unsupervised learning of atomic scale dynamics in materials"
+    journal: "Nature Communications"
+    year: 2019
+    volume: 10
+    pages: "2667"
+    doi: "10.1038/s41467-019-10663-6"
+  - type: article
+    authors:
+      - family-names: Mardt
+        given-names: Andreas
+      - family-names: Pasquali
+        given-names: Luca
+      - family-names: Wu
+        given-names: Hao
+      - family-names: "No\u00E9"
+        given-names: Frank
+    title: "VAMPnets for deep learning of molecular kinetics"
+    journal: "Nature Communications"
+    year: 2018
+    volume: 9
+    issue: 1
+    pages: "5"
+    doi: "10.1038/s41467-017-02388-1"

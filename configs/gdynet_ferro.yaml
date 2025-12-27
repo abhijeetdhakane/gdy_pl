@@ -1,0 +1,83 @@
+# GDyNet Ferro Model Configuration
+# This configuration is for training the ferro GDyNet model WITH atom direction features
+
+# Model Selection
+model_type: 'gdynet_ferro'  # Automatically pairs with PyGMDStackGen_ferro dataset
+
+# Data Paths - List individual .npy files (ferro requires 5 files including atom_directions)
+data:
+  train_fnames:
+    - /path/to/train_atom_types.npy
+    - /path/to/train_target_index.npy
+    - /path/to/train_nbr_lists.npy
+    - /path/to/train_nbr_dists.npy
+    - /path/to/train_atom_directions.npy  # Required for ferro model
+
+  val_fnames:
+    - /path/to/val_atom_types.npy
+    - /path/to/val_target_index.npy
+    - /path/to/val_nbr_lists.npy
+    - /path/to/val_nbr_dists.npy
+    - /path/to/val_atom_directions.npy
+
+  test_fnames:
+    - /path/to/test_atom_types.npy
+    - /path/to/test_target_index.npy
+    - /path/to/test_nbr_lists.npy
+    - /path/to/test_nbr_dists.npy
+    - /path/to/test_atom_directions.npy
+
+# Model Architecture Parameters
+model:
+  tau: 10                   # Time lag for time-lagged pairs
+  batch_size: 32            # Batch size for training
+  cutoff: 6.0               # Cutoff distance for neighbor lists (Angstroms)
+  num_gaussians: 50         # Number of Gaussian basis functions for distance encoding
+  epsilon: 1.0e-10          # Small constant for numerical stability
+  mode: 'trunc'             # Mode for VAMP loss computation
+  atom_fea_len: 64          # Dimension of atom feature vectors
+  n_conv: 3                 # Number of convolutional layers
+  state_len: 10             # Dimension of output state vectors
+  learning_rate: 0.001      # Learning rate for Adam optimizer
+
+# Training Configuration
+training:
+  epochs: 30                                    # Number of epochs PER loss type
+  loss_schedule: ['vamp2', 'vamp1', 'vamp2']   # Loss type cycling sequence (CONFIGURABLE!)
+                                                # Total epochs = len(loss_schedule) * epochs
+                                                # Examples:
+                                                #   ['vamp2'] - 30 epochs total
+                                                #   ['vamp2', 'vamp1', 'vamp2'] - 90 epochs total
+                                                #   ['vamp1', 'vamp2'] - 60 epochs total
+  seed: 1234                                    # Random seed for reproducibility
+
+# Optimization Options
+optimization:
+  torch_compile: false      # Enable torch.compile for PyTorch 2.0+ (10-20% speedup)
+  compile_mode: 'default'   # Compile mode: 'default', 'reduce-overhead', 'max-autotune'
+  torchscript: false        # Enable TorchScript export after training
+  mixed_precision: false    # Enable mixed precision training with GradScaler (2-3x speedup)
+
+# Checkpointing Configuration
+checkpointing:
+  frequency: 1              # Save checkpoint every N epochs
+  save_best_only: false     # If true, only save when validation loss improves
+
+# WandB Logging (Optional - for experiment tracking)
+wandb:
+  enabled: false            # Set to true to enable Weights & Biases logging
+  project: 'gdynet-ferro'   # WandB project name
+  entity: null              # WandB entity (username or team name), null for default
+  run_name: null            # Custom run name, null for auto-generated
+
+# Output Configuration
+output:
+  folder: './output/gdynet_ferro'  # Directory for all outputs (checkpoints, metrics, models)
+
+# Notes:
+# - Ferro model includes atom direction features for ferroelectric materials
+# - Required data files: atom_types.npy, target_index.npy, nbr_lists.npy, nbr_dists.npy, atom_directions.npy
+# - Training will cycle through loss_schedule, training for 'epochs' iterations with each loss type
+# - Checkpoints include full state for resuming: model weights, optimizer, scaler, metrics history
+# - Metrics are saved as both JSON and numpy arrays with last batch and average values
+# - To resume training: python trainer.py --config configs/gdynet_ferro.yaml --mode train --resume output/gdynet_ferro/checkpoints/checkpoint_latest.pth

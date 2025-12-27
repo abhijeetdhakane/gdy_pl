@@ -1,0 +1,212 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gdynet-ferro"
+version = "2.0.0"
+description = "A Graph Dynamical Neural Network Approach for Decoding Dynamical States in Ferroelectrics"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+
+authors = [
+  { name = "Abhijeet Dhakane", email = "adhakane@vols.utk.edu" }
+]
+maintainers = [
+  { name = "Abhijeet Dhakane", email = "adhakane@vols.utk.edu" }
+]
+
+keywords = [
+  "graph neural networks",
+  "molecular dynamics",
+  "VAMP",
+  "variational approach Markov Process",
+  "deep learning",
+  "PyTorch",
+  "ferroelectrics",
+  "dynamical systems",
+  "machine learning",
+  "materials science",
+  "coarse graining"
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Chemistry",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Scientific/Engineering :: Condensed Matter Physics"
+]
+
+dependencies = [
+  "numpy>=1.21.0",
+  "pyyaml>=6.0",
+  "matplotlib>=3.5.0",
+  "seaborn>=0.12.0",
+
+  # Core PyTorch stack (pin/adjust as needed for your CUDA/ROCm wheels)
+  "torch>=2.0.0",
+
+  # PyG core package (note: torch-scatter often needs platform-specific wheels)
+  "torch-geometric>=2.3.0",
+  "torch-scatter>=2.1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0",
+  "pytest-cov>=4.0.0",
+  "black>=23.0.0",
+  "ruff>=0.1.0",
+  "isort>=5.12.0",
+  "mypy>=1.0.0",
+  "pre-commit>=3.0.0"
+]
+docs = [
+  "mkdocs>=1.5.0",
+  "mkdocs-material>=9.0.0",
+  "mkdocstrings[python]>=0.24.0",
+  "mkdocs-gen-files>=0.5.0",
+  "mkdocs-literate-nav>=0.6.0"
+]
+wandb = [
+  "wandb>=0.15.0"
+]
+all = [
+  "gdynet-ferro[dev,docs,wandb]"
+]
+
+[project.scripts]
+# Entry point for CLI - trainer.py is in root directory
+gdynet-train = "trainer:main"
+
+[project.urls]
+Homepage = "https://github.com/abhijeetdhakane/gdy_pl"
+Documentation = "https://abhijeetdhakane.github.io/gdy_pl"
+Repository = "https://github.com/abhijeetdhakane/gdy_pl"
+Issues = "https://github.com/abhijeetdhakane/gdy_pl/issues"
+Changelog = "https://github.com/abhijeetdhakane/gdy_pl/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+# Ensure setuptools finds your package(s)
+# If your import package is "gdy_pl", this is fine; it will be discovered automatically.
+exclude = ["tests*", "docs*", "notebooks*", "output*", "frontier*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.yml"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+exclude = '''
+/(
+  \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | output
+  | notebooks
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+exclude = [
+  ".git",
+  ".mypy_cache",
+  ".ruff_cache",
+  ".venv",
+  "build",
+  "dist",
+  "output",
+  "notebooks"
+]
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "W",   # pycodestyle warnings
+  "F",   # Pyflakes
+  "I",   # isort
+  "B",   # flake8-bugbear
+  "C4",  # flake8-comprehensions
+  "UP"   # pyupgrade
+]
+ignore = [
+  "E501", # line too long (handled by black)
+  "B008", # do not perform function calls in argument defaults
+  "C901", # too complex
+  "W191"  # indentation contains tabs
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["gdy_pl", "config", "models", "data", "loss", "utils", "postprocess"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["gdy_pl", "config", "models", "data", "loss", "utils", "postprocess"]
+skip = [".git", ".venv", "build", "dist", "output", "notebooks"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+exclude = [
+  "build",
+  "dist",
+  "output",
+  "notebooks"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_functions = ["test_*"]
+addopts = [
+  "-v",
+  "--tb=short",
+  "--strict-markers"
+]
+markers = [
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "gpu: marks tests that require GPU"
+]
+
+[tool.coverage.run]
+source = ["gdy_pl", "config", "models", "data", "loss", "utils", "postprocess"]
+omit = [
+  "*/tests/*",
+  "*/__init__.py"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "def __repr__",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:"
+]
+
+[tool.bandit]
+exclude_dirs = ["tests", "notebooks", "output"]
+skips = ["B101"]  # Skip assert_used check

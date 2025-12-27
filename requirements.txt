@@ -1,0 +1,28 @@
+# Core Dependencies
+torch>=2.0.0
+torch-geometric>=2.3.0
+torch-scatter>=2.1.0
+
+# Data Processing
+numpy>=1.21.0
+pyyaml>=6.0
+
+# Visualization (for analysis notebooks)
+matplotlib>=3.5.0
+seaborn>=0.12.0
+
+# Optional Dependencies
+wandb>=0.15.0  # For experiment tracking (optional)
+
+# Development Dependencies (optional)
+pytest>=7.0.0
+pytest-cov>=4.0.0
+jupyter>=1.0.0  # For running analysis notebooks
+
+# Note: For CUDA support, install PyTorch with CUDA:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# or for ROCm (AMD):
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6
+
+# For NERSC Perlmutter, use the pre-installed PyTorch module:
+# module load pytorch/2.0.1
