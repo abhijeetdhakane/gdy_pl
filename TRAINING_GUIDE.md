@@ -22,13 +22,12 @@ GDyNet-ferro uses VAMP (Variational Approach for Markov Processes) loss to learn
 
 #### Loss Types
 
-1. **VAMP2**: Based on Frobenius norm
-   - More stable, commonly used for initial training
-   - Loss value: negative eigenvalue sum
-
-2. **VAMP1** (VAMP_sym): Based on nuclear norm
-   - Uses custom gradients for symmetric VAMP
-   - Can refine features learned by VAMP2
+- **VAMP2**: Based on Frobenius norm
+    - More stable, commonly used for initial training
+    - Loss value: negative eigenvalue sum
+- **VAMP1** (VAMP_sym): Based on nuclear norm
+    - Uses custom gradients for symmetric VAMP
+    - Can refine features learned by VAMP2
 
 #### Multi-Phase Training Schedule
 
@@ -59,11 +58,10 @@ Example: Phase 1, Epoch 15 → Global Epoch 45
 
 #### Hyperparameters for VAMP losses
 - **`epsilon`** – Numerical stability parameter used during matrix inversion and eigenvalue computations. For stable and reliable training, this value should typically be set **below `1e-5`**.
-
 - **`mode`** – Controls how eigenvalues are handled during **VAMP loss** computation to ensure numerical stability. The available options are:
-  - **`trunc`** – Truncates eigenvalues below `epsilon`, effectively discarding near-zero modes that can cause numerical instabilities.
-  - **`regularize`** – Adds `epsilon`-level regularization to the covariance matrices before eigenvalue decomposition, improving conditioning while preserving all modes.
-  - **`clamp`** – Clamps eigenvalues to a minimum value of `epsilon`, preventing singularities without fully removing low-energy modes.
+    - **`trunc`** – Truncates eigenvalues below `epsilon`, effectively discarding near-zero modes that can cause numerical instabilities.
+    - **`regularize`** – Adds `epsilon`-level regularization to the covariance matrices before eigenvalue decomposition, improving conditioning while preserving all modes.
+    - **`clamp`** – Clamps eigenvalues to a minimum value of `epsilon`, preventing singularities without fully removing low-energy modes.
 
 
 ---
@@ -345,13 +343,13 @@ Saved checkpoint: output/my_experiment/checkpoints/checkpoint_epoch_0001.pth
 
 ### Understanding Metrics
 
-**Loss Values**:
-- **Last**: Loss from final batch of epoch
-- **Avg**: Average loss across all batches in epoch
+#### Loss values
+- **Last**: Loss from final batch of epoch.
+- **Avg**: Average loss across all batches in epoch.
 
-**VAMP Metrics**:
-- **VAMP1**: Sum of nuclear norm eigenvalues (higher = better slow features)
-- **VAMP2**: Sum of Frobenius norm eigenvalues (related to explained variance)
+#### VAMP metrics
+- **VAMP1**: Sum of nuclear norm eigenvalues (higher = better slow features).
+- **VAMP2**: Sum of Frobenius norm eigenvalues (related to explained variance).
 
 ### Checkpoint Contents
 
@@ -502,55 +500,54 @@ To add more training beyond original schedule:
 
 ### Training Strategy
 
-1. **Start small**:
-   - Use `loss_schedule: ['vamp2']` for 30 epochs
-   - Verify training is stable
-   - Then extend to full schedule
+#### Start small
+- Use `loss_schedule: ['vamp2']` for 30 epochs.
+- Verify training is stable.
+- Then extend to the full schedule.
 
-2. **Monitor validation**:
-   - Validation loss should decrease
-   - If diverging, reduce learning rate
-   - Also monitor the `vamp2` loss value it should be close to `(states -1)`
+#### Monitor validation
+- Validation loss should decrease.
+- If diverging, reduce learning rate.
+- Also monitor the `vamp2` loss value; it should be close to `(state_len - 1)`.
 
-3. **Checkpointing**:
-   - Use `frequency: 1` to save every epoch (debugging)
-   - Use `frequency: 10` for production (saves disk space)
-   - Always keep `checkpoint_best.pth`
+#### Checkpointing
+- Use `frequency: 1` to save every epoch (debugging).
+- Use `frequency: 10` for production (saves disk space).
+- Always keep `checkpoint_best.pth`.
 
-4. **Learning rate**:
-   - Default `0.001` works well for most systems
-   - If unstable: try `0.0005`
-   - If slow: try `0.002`
+#### Learning rate
+- Default `0.001` works well for most systems.
+- If unstable: try `0.0005`.
+- If slow: try `0.002`.
 
 ### Performance Tuning
 
-1. **Batch size**:
-   - Larger values generally lead to faster training due to better GPU utilization.
-   - Upper limits are constrained by available GPU memory.
-   - Recommended values to try: **16, 32, 64** (powers of two are typically more efficient).
-   - When using `DistributedSampler` together with `DataLoader`, ensure the selected `batch_size` allows the model to see each data point exactly once per epoch across all processes.
+#### Batch size
+- Larger values generally lead to faster training due to better GPU utilization.
+- Upper limits are constrained by available GPU memory.
+- Recommended values to try: **16, 32, 64** (powers of two are typically more efficient).
+- When using `DistributedSampler` together with `DataLoader`, ensure the selected `batch_size` allows the model to see each data point exactly once per epoch across all processes.
 
+#### Mixed precision
+- Enable for large models.
+- Test accuracy first (rarely an issue).
 
-2. **Mixed precision**:
-   - Enable for large models
-   - Test accuracy first (rarely an issue)
-
-3. **torch.compile**:
-   - Use `mode: 'default'` initially
-   - Try `max-autotune` for production (longer compile, better runtime)
+#### torch.compile
+- Use `mode: 'default'` initially.
+- Try `max-autotune` for production (longer compile, better runtime).
 
 ### Distributed Training
 
-1. **Multi-GPU** (single node):
-   - Automatic with SLURM (4 GPUs = 4x speedup)
+#### Multi-GPU (single node)
+- Automatic with SLURM (4 GPUs = 4x speedup).
 
-2. **Multi-node**:
-   - Near-linear scaling up to 4-8 nodes
-   - Watch for NCCL errors (network issues)
+#### Multi-node
+- Near-linear scaling up to 4-8 nodes.
+- Watch for NCCL errors (network issues).
 
-3. **Batch size scaling**:
-   - **Effective batch size** is computed as: `batch_size × num_GPUs`.
-   - When increasing the effective batch size, the learning rate may need to be adjusted accordingly; however, this adjustment does **not** necessarily follow a strict or universal scaling law and should be tuned empirically.
+#### Batch size scaling
+- **Effective batch size** is computed as: `batch_size × num_GPUs`.
+- When increasing the effective batch size, the learning rate may need to be adjusted accordingly; however, this adjustment does **not** necessarily follow a strict or universal scaling law and should be tuned empirically.
 
 
 ---
@@ -709,21 +706,21 @@ Combine predictions for better results.
 
 ## Summary Checklist
 
-Before training:
-- [ ] Data files validated (correct format, no missing values)
-- [ ] Config file prepared (paths updated, schedule chosen)
-- [ ] Output directory has enough space
-- [ ] Environment activated (`conda activate pyg_latest`)
+### Before training
+- [ ] Data files validated (correct format, no missing values).
+- [ ] Config file prepared (paths updated, schedule chosen).
+- [ ] Output directory has enough space.
+- [ ] Environment activated (`conda activate pyg_latest`).
 
-During training:
-- [ ] Monitor console output for errors
-- [ ] Check validation loss is decreasing
-- [ ] Verify checkpoints are being saved
+### During training
+- [ ] Monitor console output for errors.
+- [ ] Check validation loss is decreasing.
+- [ ] Verify checkpoints are being saved.
 
-After training:
-- [ ] Check final metrics (train vs validation)
-- [ ] Save best model for inference
-- [ ] Document hyperparameters and results
+### After training
+- [ ] Check final metrics (train vs validation).
+- [ ] Save best model for inference.
+- [ ] Document hyperparameters and results.
 
 ---
 

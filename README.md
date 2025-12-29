@@ -1,14 +1,8 @@
 ______________________________________________________________________
 
-<div align="center">
-
 # GDyNet-Ferro - A Graph Dynamical Neural Network Approach for Decoding Dynamical States in Ferroelectrics.
 
-<a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
-<a href="https://www.pyg.org/"><img alt="PyG" src="https://img.shields.io/badge/PyG-3C2179?logo=pyg&logoColor=white"></a>
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Paper](https://img.shields.io/badge/Paper-Carbon%20Trends-orange)](https://doi.org/10.1016/j.cartre.2023.100264)
+[![PyTorch](https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/) [![PyG](https://img.shields.io/badge/PyG-3C2179?logo=pyg&logoColor=white)](https://www.pyg.org/) [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Paper](https://img.shields.io/badge/Paper-Carbon%20Trends-orange)](https://doi.org/10.1016/j.cartre.2023.100264)
 
 *Scalable PyTorch implementation of **GDyNet-ferro** - Graph Dynamical Networks with VAMP loss for analyzing molecular dynamics trajectories*
 
@@ -17,8 +11,6 @@ ______________________________________________________________________
 [Quick Start](#quick-start) •
 [Documentation](https://abhijeetdhakane.github.io/gdy_pl) •
 [Citation](#citation)
-
-</div>
 
 ---
 
@@ -121,7 +113,7 @@ pip install -e ".[all]"
 
 ### Dependencies
 
-**Core Requirements** (automatically installed):
+#### Core requirements (automatically installed)
 - torch >= 2.0.0
 - torch-geometric >= 2.3.0
 - torch-scatter >= 2.1.0
@@ -149,6 +141,7 @@ An example batch submission script for **OLCF Frontier** is provided here:
 
 ```
 gdy_pl/
+├── asset/                     # Source figures
 ├── config/                    # Model registry and configuration
 │   ├── __init__.py
 │   └── registry.py            # Dynamic model-dataset pairing
@@ -158,10 +151,14 @@ gdy_pl/
 ├── data/                      # Data loading utilities
 │   ├── __init__.py
 │   └── gdynet_dataloader.py   # PyTorch Geometric dataloaders
-├── docs/                      # Documentation (for mkdocs)
-│   └── index.md
+├── docs/                      # Documentation (MkDocs)
+│   ├── asset/                 # Docs images
+│   ├── index.md
+│   ├── readme.md              # Includes README.md
+│   └── training-guide.md      # Includes TRAINING_GUIDE.md
 ├── frontier/                  # OLCF Frontier HPC job scripts
 │   └── example_submit.sbatch  # Example SLURM submission script
+│   └── export_DDP_var.sh      # DDP environment variable helper
 ├── loss/                      # Loss functions
 │   ├── __init__.py
 │   └── vamploss.py            # VAMP1, VAMP2, VAMP_sym implementations
@@ -174,6 +171,7 @@ gdy_pl/
 │   ├── analysis_example.ipynb
 │   ├── tensorflow/            # TensorFlow examples (legacy)
 │   └── torch/                 # PyTorch-specific examples
+├── output/                    # Training outputs (generated)
 ├── postprocess/               # Post-processing and analysis
 │   ├── __init__.py
 │   ├── postprocess.py         # GDYNetAnalyzer class
@@ -189,7 +187,8 @@ gdy_pl/
 ├── CHANGELOG.md               # Version history
 ├── CITATION.cff               # Citation metadata
 ├── LICENSE                    # MIT License
-└── README.md                  # This file
+├── README.md                  # This file
+└── TRAINING_GUIDE.md          # Detailed training guide
 ```
 
 ---
@@ -489,11 +488,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<div align="center">
-
 **If you find this work useful, please consider giving it a star!**
 
-[Report Bug](https://github.com/abhijeetdhakane/gdy_pl/issues) •
-[Request Feature](https://github.com/abhijeetdhakane/gdy_pl/issues)
-
-</div>
+[Report Bug](https://github.com/abhijeetdhakane/gdy_pl/issues) • [Request Feature](https://github.com/abhijeetdhakane/gdy_pl/issues)
