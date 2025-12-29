@@ -15,7 +15,7 @@ ______________________________________________________________________
 [Features](#features) •
 [Installation](#installation) •
 [Quick Start](#quick-start) •
-[Documentation](#documentation) •
+[Documentation](https://abhijeetdhakane.github.io/gdy_pl) •
 [Citation](#citation)
 
 </div>
