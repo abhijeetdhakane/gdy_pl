@@ -1,0 +1,1 @@
+--8<-- "TRAINING_GUIDE.md"

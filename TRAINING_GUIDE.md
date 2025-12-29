@@ -1,6 +1,6 @@
-# GDyNet Training Guide
+# GDyNet-ferro Training Guide
 
-Comprehensive guide for training GDyNet models on molecular dynamics data.
+Comprehensive guide for training GDyNet-ferro models on molecular dynamics data.
 
 ## Table of Contents
 1. [Understanding the Training Process](#understanding-the-training-process)

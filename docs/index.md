@@ -6,10 +6,14 @@ Welcome to the GDyNet-Ferro documentation.
 
 **GDyNet-Ferro** is a graph neural network framework for identifying slow dynamical features and hidden states in molecular dynamics simulations. This PyTorch implementation uses the **Variational Approach for Markov Processes (VAMP)** to learn meaningful collective variables from atomistic trajectories, with a focus on ferroelectric materials.
 
+![Overview Architecture](asset/fig1_revised_hdr2.png)
+
+
+
 ## Quick Links
 
-- [README](https://github.com/abhijeetdhakane/gdy_pl/blob/main/README.md) - Main documentation
-- [Training Guide](https://github.com/abhijeetdhakane/gdy_pl/blob/main/TRAINING_GUIDE.md) - Comprehensive training instructions
+- [README](readme.md) - Main documentation
+- [Training Guide](training-guide.md) - Comprehensive training instructions
 - [Paper](https://doi.org/10.1016/j.cartre.2023.100264) - Carbon Trends 2023 publication
 
 ## Installation
@@ -36,3 +40,6 @@ If you use this code in your research, please cite:
   doi={10.1016/j.cartre.2023.100264}
 }
 ```
+
+
+[image1]: asset/fig1_revised_hdr2.png

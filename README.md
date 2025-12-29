@@ -305,7 +305,7 @@ srun -l bash -lc "
 
 **HPC (SLURM)**:
 ```bash
-sbatch frontier/sbatch example_submit.sbatch
+sbatch frontier/example_submit.sbatch
 ```
 
 ### 4. Resume Training

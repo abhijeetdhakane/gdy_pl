@@ -1,4 +1,4 @@
-site_name: GDyNet Documentation
+site_name: GDyNet-ferro Documentation
 site_description: Graph Dynamical Network for Molecular Dynamics Analysis
 site_author: Abhijeet Dhakane
 site_url: https://abhijeetdhakane.github.io/gdy_pl
@@ -88,6 +88,9 @@ markdown_extensions:
       repo: gdy_pl
   - pymdownx.mark
   - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      base_path: ..
+      check_paths: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -116,6 +119,8 @@ watch:
 # Navigation - minimal for now, expand as documentation grows
 nav:
   - Home: index.md
+  - README: readme.md
+  - Training Guide: training-guide.md
   # Uncomment and add files as documentation is written:
   # - Getting Started:
   #     - Installation: getting-started/installation.md
