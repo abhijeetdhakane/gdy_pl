@@ -157,7 +157,7 @@ gdy_pl/
 │   ├── readme.md              # Includes README.md
 │   └── training-guide.md      # Includes TRAINING_GUIDE.md
 ├── frontier/                  # OLCF Frontier HPC job scripts
-│   └── example_submit.sbatch  # Example SLURM submission script
+│   ├── example_submit.sbatch  # Example SLURM submission script
 │   └── export_DDP_var.sh      # DDP environment variable helper
 ├── loss/                      # Loss functions
 │   ├── __init__.py
@@ -453,9 +453,6 @@ pip install -e ".[dev]"
 
 # Set up pre-commit hooks
 pre-commit install
-
-# Run tests
-pytest tests/
 
 # Format code
 black .
